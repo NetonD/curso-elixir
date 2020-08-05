@@ -24,7 +24,7 @@ __*Pure Functions*__ são funções que ao executarem não produzem efeitos cola
 
 ## Immutable variables
 
-As variáveis nunca são sobrescritas. Dessa maneira ao passar uma variável para uma função estamos passando uma cópia dela.
+As variáveis nunca são sobrescritas ao ser utilizada como argumento de uma função. Dessa maneira ao passar uma variável para uma função estamos passando uma cópia dela.
 
 ## Recursion
 
