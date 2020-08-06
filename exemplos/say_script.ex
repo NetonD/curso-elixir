@@ -1,0 +1,1 @@
+IO.puts("Sou executado com 'elixir arquivo.exs'")

@@ -1,1 +1,3 @@
 *.beam
+.vscode
+.elixir_ls
