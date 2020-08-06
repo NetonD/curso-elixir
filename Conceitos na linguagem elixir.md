@@ -65,3 +65,19 @@ Para obter a representação binária da string basta concatenar a string com o 
 "Neto" <> <<0>> #<<78, 101, 116, 111, 0>>
 ```
 
+## [Keyword lists e Maps](keywordlists_e_maps.exs)
+
+Esses dois tipo de conjuntos permitem que usemos chaves para encontrar os elementos inseridos nelas. Uma `Keyword List` só permite que nossas chaves sejam do tipo `Atom` além de não ser indexada e cada elemento nela é um `Tuple` na forma de `Atom : Valor`. Já as `Maps` são mais flexíveis quanto ao tipo da chave podendo utilizar qualquer um dos tipos como chave.
+
+```elixir
+minha_kwl = [{:chave1, "Valor1"},{:chave2, 123}]
+minha_map = ["chave1"=>123, 7=>[:ok,:bad], [1,2,3]=>"Lista"]
+```
+
+## [Cláusula de guarda](clausula_guarda.exs)
+
+Como o paradigma de programação funcional recorre muitas vezes à recursão, então para que não ocorra de realizar uma chamada recursiva infinita utiliza-se cláusulas que verificam se o estado da variável é válido para continuar com a execução. Ela se encontra logo antes da expressão `do` e pode receber uma serie de verificações booleanas.
+
+```elixir
+def func(n) when expressão_booleana_sobre_n, do ...
+```
