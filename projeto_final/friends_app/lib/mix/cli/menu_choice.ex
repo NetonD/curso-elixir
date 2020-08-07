@@ -15,7 +15,8 @@ defmodule FriendsApp.CLI.MenuChoice do
       |> Shell.prompt()
       |> parse_answer()
       |> find_menu_by_index.()
-      |> confirm_choice
+      |> check_validit()
+      |> confirm_choice()
   end
 
   defp display_options(options) do
@@ -46,9 +47,16 @@ defmodule FriendsApp.CLI.MenuChoice do
   end
 
   def invalid_option do
-    Shell.cmd("clear")
-    Shell.info("Opção inválida")
+    Shell.error("Opção inválida")
+    Shell.prompt("Pressione ENTER...")
     start_choices()
+  end
+
+  def check_validit(chosen_option) do
+    case chosen_option do
+      :error -> invalid_option()
+      _ -> confirm_choice(chosen_option)
+    end
   end
 
   def confirm_choice(chosen_option) do
