@@ -1,11 +1,11 @@
-defmodule FriendsApp.CLI.MenuChoice do
+defmodule FriendsApp.CLI.Menu.Choice do
   alias Mix.Shell.IO, as: Shell
-
+  alias FriendsApp.DB.CSV
   def start_choices do
       Shell.cmd("clear")
       Shell.info("Escolha uma opçao:")
 
-      menu_itens = FriendsApp.CLI.MenuItens.all()
+      menu_itens = FriendsApp.CLI.Menu.Itens.all()
       find_menu_by_index = &Enum.at(menu_itens,&1,:error)
 
       menu_itens
@@ -17,6 +17,8 @@ defmodule FriendsApp.CLI.MenuChoice do
       |> find_menu_by_index.()
       |> check_validit()
       |> confirm_choice()
+      |> CSV.perform()
+
   end
 
   defp display_options(options) do
@@ -46,26 +48,27 @@ defmodule FriendsApp.CLI.MenuChoice do
 
   end
 
-  def invalid_option do
-    Shell.error("Opção inválida")
-    Shell.prompt("Pressione ENTER...")
-    start_choices()
-  end
-
   def check_validit(chosen_option) do
     case chosen_option do
       :error -> invalid_option()
-      _ -> confirm_choice(chosen_option)
+      _ -> chosen_option
     end
   end
 
   def confirm_choice(chosen_option) do
     Shell.cmd("clear")
-    Shell.info("Opção escolhida: #{chosen_option.label}")
+    a = is_map(chosen_option)
+    Shell.info("Você escolheu... #{a}]")
 
     case Shell.yes?("Confimar?") do
-      :true -> Shell.info("Confirmado")
-      :false -> start_choices()
+      true -> chosen_option
+      false -> start_choices()
     end
+  end
+
+  def invalid_option do
+    Shell.error("Opção inválida")
+    Shell.prompt("Pressione ENTER...")
+    start_choices()
   end
 end
