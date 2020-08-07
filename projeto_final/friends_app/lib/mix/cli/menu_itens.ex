@@ -1,5 +1,5 @@
-defmodule FriendsApp.Mix.CLI.MenuItens do
-  alias FriendsApp.Mix.CLI.Menu
+defmodule FriendsApp.CLI.MenuItens do
+  alias FriendsApp.CLI.Menu
 
   def all, do: [
     %Menu{label: "Cadastrar amigo na lista", id: :create},

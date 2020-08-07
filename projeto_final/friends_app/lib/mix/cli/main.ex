@@ -6,6 +6,8 @@ defmodule FriendsApp.CLI.Main do
         Shell.info("INICIANDO --[Friends App]--")
         show_message()
         Shell.prompt("Pressione ENTER para continuar...")
+
+        FriendsApp.CLI.MenuChoice.start_choices
     end
 
     defp show_message do
