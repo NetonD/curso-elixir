@@ -23,6 +23,13 @@ defmodule FriendsApp.DB.CSV do
     |> save_csv_file
   end
 
+  defp read() do
+    File.read!("#{File.cwd!()}/friends.csv")
+    |> CSVparser.parse_string(headers: false)
+    |> Scribe.console()
+
+  end
+
   defp collect_data do
     %Friend{
       name: request_data("Digite o nome: "),
