@@ -1,24 +1,24 @@
 defmodule FriendsApp.CLI.Menu.Choice do
   alias Mix.Shell.IO, as: Shell
   alias FriendsApp.DB.CSV
+
   def start_choices do
-      Shell.cmd("clear")
-      Shell.info("Escolha uma opçao:")
+    Shell.cmd("clear")
+    Shell.info("Escolha uma opçao:")
 
-      menu_itens = FriendsApp.CLI.Menu.Itens.all()
-      find_menu_by_index = &Enum.at(menu_itens,&1,:error)
+    menu_itens = FriendsApp.CLI.Menu.Itens.all()
+    find_menu_by_index = &Enum.at(menu_itens, &1, :error)
 
-      menu_itens
-      |> Enum.map(&(&1.label))
-      |> display_options()
-      |> generate_question()
-      |> Shell.prompt()
-      |> parse_answer()
-      |> find_menu_by_index.()
-      |> check_validit()
-      |> confirm_choice()
-      |> CSV.perform()
-
+    menu_itens
+    |> Enum.map(& &1.label)
+    |> display_options()
+    |> generate_question()
+    |> Shell.prompt()
+    |> parse_answer()
+    |> find_menu_by_index.()
+    |> check_validit()
+    |> confirm_choice()
+    |> CSV.perform()
   end
 
   defp display_options(options) do
@@ -33,9 +33,9 @@ defmodule FriendsApp.CLI.Menu.Choice do
 
   defp generate_question(options) do
     question =
-    1..Enum.count(options)
-    |> Enum.join(",")
-    |> (fn lista -> "Qual é a opção escolhida? [#{lista}]" end).()
+      1..Enum.count(options)
+      |> Enum.join(",")
+      |> (fn lista -> "Qual é a opção escolhida? [#{lista}]" end).()
 
     question
   end
@@ -45,7 +45,6 @@ defmodule FriendsApp.CLI.Menu.Choice do
       :error -> invalid_option()
       {option, _} -> option - 1
     end
-
   end
 
   def check_validit(chosen_option) do
@@ -57,8 +56,7 @@ defmodule FriendsApp.CLI.Menu.Choice do
 
   def confirm_choice(chosen_option) do
     Shell.cmd("clear")
-    a = is_map(chosen_option)
-    Shell.info("Você escolheu... #{a}]")
+    Shell.info("Você escolheu: [#{chosen_option.label}]")
 
     case Shell.yes?("Confimar?") do
       true -> chosen_option

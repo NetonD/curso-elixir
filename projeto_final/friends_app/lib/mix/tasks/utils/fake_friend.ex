@@ -9,15 +9,14 @@ defmodule Mix.Tasks.Utils.AddFakeFriend do
     create_fakelist_friends([], 50)
     |> CSVparser.dump_to_iodata()
     |> save_csv_file()
-
   end
 
-  defp create_fakelist_friends(list,count) when count <= 1 do
+  defp create_fakelist_friends(list, count) when count <= 1 do
     list ++ [fake_friend_generator()]
   end
 
-  defp create_fakelist_friends(list,count) do
-    list ++ [fake_friend_generator()] ++ create_fakelist_friends(list, count-1)
+  defp create_fakelist_friends(list, count) do
+    list ++ [fake_friend_generator()] ++ create_fakelist_friends(list, count - 1)
   end
 
   defp fake_friend_generator do
@@ -30,8 +29,8 @@ defmodule Mix.Tasks.Utils.AddFakeFriend do
     |> Map.values()
   end
 
-  defp save_csv_file(data)do
-    File.write!("#{File.cwd!}/friends.csv",data,[:append])
+  defp save_csv_file(data) do
+    Application.fetch_env!(:friends_app, :path)
+    |> File.write!(data, [:append])
   end
-
 end
